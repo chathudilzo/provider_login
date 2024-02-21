@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "980278930881",
+    "project_id": "finance-tracker-fc334",
+    "storage_bucket": "finance-tracker-fc334.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980278930881:android:368691b20c9138a762d340",
+        "android_client_info": {
+          "package_name": "com.example.provider_login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQMNp6LtUMoLXSvQt6xePGl91TNdTU1Co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
