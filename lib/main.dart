@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => UserProvider(),)
+    ],
+    child: ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
           home: const MainScreen(),
         );
-      });
+      }));
 
 
   }
@@ -50,10 +53,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => UserProvider(),)
-    ],
-    child: StreamBuilder(
+    return Scaffold(
+     body:  StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
      builder: (context,snapshot){
         if(snapshot.connectionState == ConnectionState.waiting){
@@ -74,7 +75,8 @@ class _MainScreenState extends State<MainScreen> {
           );
         }
        
-     }));
+     })
+    ) ;
   }
 }
 

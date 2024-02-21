@@ -1,27 +1,55 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider_login/src/models/transactions.dart';
+
+
 
 class UserData{
   final String email;
   final String uid;
   final String userName;
+  final List<dynamic> transactions;
+  final String remainingBudget;
+  final String totalIncome;
+  final String totalExpense;
 
-  const UserData({
+  // final List<TransactionData> transactions;
+  // final List<TransactionData> transactionData;
+  // final List<TransactionData> transactionData;
+
+
+  // final List<TransactionData> transactionData;
+
+   const UserData({
     required this.email,
     required this.uid,
     required this.userName,
+    required this.transactions,
+    required this.remainingBudget,
+    required this.totalIncome,
+    required this.totalExpense
   });
 
 
   Map<String,dynamic> toJson()=>{
     'email':email,
     'uid':uid,
-    'userName':userName
+    'userName':userName,
+    'transactions':transactions.map((transaction) => transaction.toJson()).toList(),
+     'remainingBudget':remainingBudget,
+    'totalIncome':totalIncome,
+    'totalExpense':totalExpense
   };
+
 
   static UserData fromSnap(DocumentSnapshot snap){
     var snapshot= snap.data() as Map<String,dynamic>;
-    return UserData(email: snapshot['email'], uid: snapshot['uid'], userName: snapshot['userName']);
-    
+    //List<TransactionData> transactionsDynamic=snapshot['transactions'];
+    //List<TransactionData> transactions = transactionsDynamic.map((dynamic transaction)=>TransactionData.fromJson(transaction as Map<String,dynamic>)).toList();
+
+
+    return UserData(email: snapshot['email'], uid: snapshot['uid'], userName: snapshot['userName'], transactions:snapshot['transactions'], remainingBudget: snapshot['remainingBudget'].toString(), totalIncome: snapshot['totalIncome'].toString(), totalExpense: snapshot['totalExpense'].toString());
+
+
   }
 
 

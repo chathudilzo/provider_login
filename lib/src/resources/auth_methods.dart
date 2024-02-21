@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider_login/src/models/transactions.dart';
 import 'package:provider_login/src/models/user_data.dart';
 
 class AuthMethods{
@@ -12,8 +13,11 @@ class AuthMethods{
     try{
       if(email.isNotEmpty && password.isNotEmpty && name.isNotEmpty && confirmPassword.isNotEmpty){
         if(password==confirmPassword){
+          List<TransactionData> transactions=<TransactionData>[];
+          //register user
           UserCredential cred=await _auth.createUserWithEmailAndPassword(email: email, password: password);
-          UserData userData=UserData(email: email,userName: name,uid:cred.user!.uid);
+          UserData userData=UserData(email: email,userName: name,uid:cred.user!.uid,transactions:transactions,remainingBudget: '0.0',totalIncome: '0.0',totalExpense: '0.0');
+          
 
           await _firestore.collection('users').doc(cred.user!.uid).set(userData.toJson());
           resp ='success';
@@ -36,6 +40,7 @@ class AuthMethods{
       if(email.isNotEmpty && password.isNotEmpty){
         await _auth.signInWithEmailAndPassword(email: email, password: password);
         res='success';
+        print('success');
       }else{
         print('Please enter all the fields');
       }
@@ -49,6 +54,7 @@ class AuthMethods{
   Future <UserData> getUserDetails()async{
     User currentUser=_auth.currentUser!;
     DocumentSnapshot snap=await _firestore.collection('users').doc(currentUser.uid).get();
+    print(snap.data());
     return UserData.fromSnap(snap);
   }
 }

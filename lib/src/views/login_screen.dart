@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void loginUser()async{
     String res= await AuthMethods().loginUser(email: emailController.text, password: passwordController.text);
     if(res=='success'){
-     // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
+     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
     }else{
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error Occured')));
     }
