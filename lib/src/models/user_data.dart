@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider_login/src/models/monthly_budget.dart';
 import 'package:provider_login/src/models/transactions.dart';
 
 
@@ -7,10 +8,12 @@ class UserData{
   final String email;
   final String uid;
   final String userName;
-  final List<dynamic> transactions;
+  final List<TransactionData> transactions;
   final String remainingBudget;
   final String totalIncome;
   final String totalExpense;
+  final MonthlyBudget monthlyBudget;
+  
 
   // final List<TransactionData> transactions;
   // final List<TransactionData> transactionData;
@@ -26,7 +29,8 @@ class UserData{
     required this.transactions,
     required this.remainingBudget,
     required this.totalIncome,
-    required this.totalExpense
+    required this.totalExpense,
+    required this.monthlyBudget
   });
 
 
@@ -37,17 +41,19 @@ class UserData{
     'transactions':transactions.map((transaction) => transaction.toJson()).toList(),
      'remainingBudget':remainingBudget,
     'totalIncome':totalIncome,
-    'totalExpense':totalExpense
+    'totalExpense':totalExpense,
+    'monthlyBudget':monthlyBudget.toJson()
   };
 
 
   static UserData fromSnap(DocumentSnapshot snap){
     var snapshot= snap.data() as Map<String,dynamic>;
-    //List<TransactionData> transactionsDynamic=snapshot['transactions'];
-    //List<TransactionData> transactions = transactionsDynamic.map((dynamic transaction)=>TransactionData.fromJson(transaction as Map<String,dynamic>)).toList();
+    List<dynamic> transactionsDynamic=snapshot['transactions'];
+    print('SNAP:$transactionsDynamic');
+    List<TransactionData> transactions = transactionsDynamic.map((dynamic transaction)=>TransactionData.fromJson(transaction as Map<String,dynamic>)).toList();
+      print('SNAP2:${transactions.length}');
 
-
-    return UserData(email: snapshot['email'], uid: snapshot['uid'], userName: snapshot['userName'], transactions:snapshot['transactions'], remainingBudget: snapshot['remainingBudget'].toString(), totalIncome: snapshot['totalIncome'].toString(), totalExpense: snapshot['totalExpense'].toString());
+    return UserData(email: snapshot['email'], uid: snapshot['uid'], userName: snapshot['userName'], transactions:transactions, remainingBudget: snapshot['remainingBudget'].toString(), totalIncome: snapshot['totalIncome'].toString(), totalExpense: snapshot['totalExpense'].toString(),monthlyBudget: MonthlyBudget.fromJson(snapshot['monthlyBudget']));
 
 
   }

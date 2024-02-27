@@ -41,7 +41,12 @@ dependencies:
   provider:
   flutter_screenutil: 
   calendar_date_picker2: ^0.5.3
-  google_fonts: 
+  google_fonts:
+  intl:
+  fl_chart: ^0.41.0
+  loading_animation_widget: 
+  awesome_snackbar_content: ^0.1.3
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
